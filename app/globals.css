@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+:root {
+  /* Backgrounds */
+  --bg-deep: #0B0D2A;
+  --bg-mid: #0F1035;
+  --bg-surface: #141640;
+
+  /* Neon */
+  --neon-cyan: #00F5FF;
+  --neon-magenta: #FF2D78;
+  --neon-orange: #FF6B1A;
+  --neon-purple: #B44FFF;
+
+  /* Text */
+  --text-primary: #E8EAFF;
+  --text-secondary: #8A8FCC;
+  --text-muted: #4A4F8A;
+
+  /* Grid/lines */
+  --grid-line: rgba(0, 245, 255, 0.08);
+  --border-neon: rgba(0, 245, 255, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* Scanlines overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--neon-cyan);
+  border-radius: 3px;
+}
+
+/* Glow utilities */
+.glow-cyan {
+  text-shadow: 0 0 7px #00F5FF, 0 0 21px #00F5FF, 0 0 42px rgba(0, 245, 255, 0.4);
+}
+
+.glow-magenta {
+  text-shadow: 0 0 7px #FF2D78, 0 0 21px #FF2D78, 0 0 42px rgba(255, 45, 120, 0.4);
+}
+
+.glow-orange {
+  text-shadow: 0 0 7px #FF6B1A, 0 0 21px #FF6B1A, 0 0 42px rgba(255, 107, 26, 0.4);
+}
+
+.glow-purple {
+  text-shadow: 0 0 7px #B44FFF, 0 0 21px #B44FFF, 0 0 42px rgba(180, 79, 255, 0.4);
+}
+
+.box-glow-cyan {
+  box-shadow: 0 0 7px rgba(0, 245, 255, 0.3), 0 0 21px rgba(0, 245, 255, 0.15);
+}
+
+.box-glow-magenta {
+  box-shadow: 0 0 7px rgba(255, 45, 120, 0.3), 0 0 21px rgba(255, 45, 120, 0.15);
+}
+
+/* Pixel border effect */
+.pixel-border {
+  box-shadow:
+    -2px 0 0 0 var(--neon-cyan),
+    2px 0 0 0 var(--neon-cyan),
+    0 -2px 0 0 var(--neon-cyan),
+    0 2px 0 0 var(--neon-cyan),
+    -4px -2px 0 0 var(--neon-cyan),
+    4px -2px 0 0 var(--neon-cyan),
+    -4px 2px 0 0 var(--neon-cyan),
+    4px 2px 0 0 var(--neon-cyan),
+    -2px -4px 0 0 var(--neon-cyan),
+    2px -4px 0 0 var(--neon-cyan),
+    -2px 4px 0 0 var(--neon-cyan),
+    2px 4px 0 0 var(--neon-cyan);
+}
+
+/* Star particles */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Grid perspective for hero */
+.grid-perspective {
+  transform: perspective(300px) rotateX(45deg);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Gradient text */
+.gradient-text-cyan-magenta {
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cyan-orange {
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-orange), var(--neon-purple));
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 245, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .star {
+    animation: none;
+    opacity: 0.5;
+  }
+}
