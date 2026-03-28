@@ -121,7 +121,7 @@ export default function Stack() {
       }}
     >
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
-        <SectionHeader comment="STACK" title="Tecnolog\u00edas que dominamos" />
+        <SectionHeader comment="STACK" title="Tecnologías que dominamos" />
 
         {/* ── Two-column layout ── */}
         <div
