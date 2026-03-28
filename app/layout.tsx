@@ -27,6 +27,9 @@ const pressStart2P = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/logo.ico",
+  },
   title: "Uribasoft — Software de Calidad para el Futuro",
   description:
     "Empresa de desarrollo de soluciones tecnológicas para cualquier industria. Estándares internacionales, entrega rápida con IA supervisada.",
