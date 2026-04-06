@@ -34,6 +34,8 @@ const CONTACTS = [
   { type: "email" as const, value: "fjournade@uribasoft.com" },
   { type: "github" as const, value: "github.com/uribasoft", href: "https://github.com/uribasoft" },
 ];
+const EMAIL_CONTACTS = CONTACTS.filter((c) => c.type === "email");
+const EXTRA_CONTACTS = CONTACTS.filter((c) => c.type !== "email");
 
 /* ── Shared input styles ── */
 const inputBaseStyle: React.CSSProperties = {
@@ -194,54 +196,108 @@ export default function Contacto() {
           menos de 24 horas.
         </motion.p>
 
-        {/* ── Two-column layout ── */}
+        {/* ── Contact info + centered form ── */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1.4fr",
-            gap: "3rem",
-            alignItems: "start",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "2rem",
           }}
         >
-          {/* ── LEFT COLUMN: Contact info ── */}
+          {/* ── Top: Contact info ── */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="contact-top-grid"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.5rem",
-              paddingTop: "1rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1rem 2rem",
+              width: "100%",
+              maxWidth: "760px",
+              justifyItems: "center",
+              margin: "0 auto",
             }}
           >
-            {CONTACTS.map((contact) => (
-              <div
-                key={contact.value}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  cursor: contact.type === "email" ? "pointer" : "default",
-                  transition: "color 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "var(--neon-cyan)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "var(--text-secondary)";
-                }}
-                onClick={() =>
-                  contact.type === "email" && handleCopy(contact.value)
-                }
-              >
-                {contact.type === "email" ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                alignItems: "flex-start",
+                width: "100%",
+                maxWidth: "340px",
+              }}
+            >
+              {EMAIL_CONTACTS.map((contact) => (
+                <div
+                  key={contact.value}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    cursor: "pointer",
+                    transition: "color 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--neon-cyan)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                  }}
+                  onClick={() => handleCopy(contact.value)}
+                >
                   <Mail size={18} style={{ color: "inherit", flexShrink: 0 }} />
-                ) : (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-rajdhani)",
+                      fontSize: "1rem",
+                      color: "inherit",
+                    }}
+                  >
+                    {contact.value}
+                  </span>
+                  <span style={{ marginLeft: "auto", flexShrink: 0 }}>
+                    {copiedEmail === contact.value ? (
+                      <Check size={14} style={{ color: "#00FF88" }} />
+                    ) : (
+                      <Copy size={14} style={{ color: "var(--text-muted)", opacity: 0.6 }} />
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                alignItems: "flex-start",
+                width: "100%",
+                maxWidth: "340px",
+              }}
+            >
+              {EXTRA_CONTACTS.map((contact) => (
+                <div
+                  key={contact.value}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    transition: "color 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--neon-cyan)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                  }}
+                >
                   <ExternalLink size={18} style={{ color: "inherit", flexShrink: 0 }} />
-                )}
-                {contact.type === "github" ? (
                   <a
                     href={contact.href}
                     target="_blank"
@@ -255,50 +311,33 @@ export default function Contacto() {
                   >
                     {contact.value}
                   </a>
-                ) : (
-                  <span
-                    style={{
-                      fontFamily: "var(--font-rajdhani)",
-                      fontSize: "1rem",
-                      color: "inherit",
-                    }}
-                  >
-                    {contact.value}
-                  </span>
-                )}
-                {contact.type === "email" && (
-                  <span style={{ marginLeft: "auto", flexShrink: 0 }}>
-                    {copiedEmail === contact.value ? (
-                      <Check size={14} style={{ color: "#00FF88" }} />
-                    ) : (
-                      <Copy size={14} style={{ color: "var(--text-muted)", opacity: 0.6 }} />
-                    )}
-                  </span>
-                )}
-              </div>
-            ))}
+                </div>
+              ))}
 
-            <div
-              style={{
-                marginTop: "1.5rem",
-                fontFamily: "var(--font-share-tech-mono)",
-                fontSize: "0.75rem",
-                color: "var(--neon-cyan)",
-                letterSpacing: "0.05em",
-              }}
-            >
-              [ TIEMPO DE RESPUESTA PROMEDIO: &lt; 24H ]
+              <div
+                style={{
+                  fontFamily: "var(--font-share-tech-mono)",
+                  fontSize: "0.75rem",
+                  color: "var(--neon-cyan)",
+                  letterSpacing: "0.05em",
+                  margin: 0,
+                }}
+              >
+                [ TIEMPO DE RESPUESTA PROMEDIO: &lt; 24H ]
+              </div>
             </div>
           </motion.div>
 
-          {/* ── RIGHT COLUMN: Form ── */}
+          {/* ── Bottom: Form ── */}
           <motion.form
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
             onSubmit={handleSubmit(onSubmit)}
             style={{
+              width: "100%",
+              maxWidth: "760px",
               background: "var(--bg-surface)",
               border: "1px solid var(--border-neon)",
               borderRadius: "8px",
@@ -485,11 +524,18 @@ export default function Contacto() {
         </div>
       </div>
 
-      {/* ── Responsive breakpoints ── */}
       <style>{`
         @media (max-width: 768px) {
-          #contacto > div > div:last-of-type {
+          #contacto .contact-top-grid {
             grid-template-columns: 1fr !important;
+            justify-items: start !important;
+            max-width: none !important;
+            margin: 0 !important;
+            width: 100% !important;
+          }
+          #contacto .contact-top-grid > div {
+            max-width: none !important;
+            width: 100% !important;
           }
         }
         #contacto input::placeholder,

@@ -42,7 +42,7 @@ export default function Nosotros() {
     <section
       id="nosotros"
       style={{
-        padding: "100px 2rem",
+        padding: "100px 2rem 20px",
         background: "var(--bg-mid)",
         position: "relative",
         overflow: "hidden",
@@ -54,16 +54,13 @@ export default function Nosotros() {
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
-            gap: "3rem",
-            alignItems: "flex-start",
+            flexDirection: "column",
+            gap: "2.5rem",
           }}
         >
-          {/* ── Left column: text ── */}
+          {/* ── Top block: text ── */}
           <div
             style={{
-              flex: "1 1 55%",
-              minWidth: "300px",
               display: "flex",
               flexDirection: "column",
               gap: "2rem",
@@ -154,32 +151,35 @@ export default function Nosotros() {
             </motion.div>
           </div>
 
-          {/* ── Right column: team cards ── */}
+          {/* ── Bottom row: team cards ── */}
           <div
             style={{
-              flex: "1 1 38%",
-              minWidth: "280px",
               display: "flex",
-              flexDirection: "column",
+              flexWrap: "wrap",
               gap: "2rem",
+              alignItems: "stretch",
             }}
           >
-            <TeamCard
-              name="Gabriel Cancellieri"
-              role="Co-Founder & Backend Engineer"
-              avatar="/gcancellieri.png"
-              tags={["Java", "Spring Boot", "PostgreSQL", "AWS"]}
-              accentColor="cyan"
-              slideFrom="left"
-            />
-            <TeamCard
-              name="Facundo Journade"
-              role="Co-Founder & Frontend Engineer"
-              avatar="/fjournade.png"
-              tags={["React", "Next.js", "TypeScript", "Node.js"]}
-              accentColor="magenta"
-              slideFrom="right"
-            />
+            <div style={{ flex: "1 1 360px", minWidth: "280px" }}>
+              <TeamCard
+                name="Gabriel Cancellieri"
+                role="Co-Founder & Backend Engineer"
+                avatar="/gcancellieri.png"
+                tags={["Java", "Spring Boot", "PostgreSQL", "AWS"]}
+                accentColor="cyan"
+                slideFrom="left"
+              />
+            </div>
+            <div style={{ flex: "1 1 360px", minWidth: "280px" }}>
+              <TeamCard
+                name="Facundo Journade"
+                role="Co-Founder & Frontend Engineer"
+                avatar="/fjournade.png"
+                tags={["React", "Next.js", "TypeScript", "Node.js"]}
+                accentColor="magenta"
+                slideFrom="right"
+              />
+            </div>
           </div>
         </div>
       </div>
